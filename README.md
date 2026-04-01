@@ -123,7 +123,7 @@ Tests cover:
 
 ---
 
-## 📱 Screenshots
+<!-- ## 📱 Screenshots
 
 | Dark Mode | Light Mode |
 |-----------|------------|
@@ -131,4 +131,4 @@ Tests cover:
 
 > Add your real app screenshots at:
 > - `screenshots/dark-mode.png`
-> - `screenshots/light-mode.png`
+> - `screenshots/light-mode.png` -->
