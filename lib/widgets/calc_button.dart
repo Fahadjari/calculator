@@ -90,10 +90,6 @@ class _CalcButtonState extends State<CalcButton>
           child: GestureDetector(
             onTap: _handleTap,
             onTapDown: (_) => _controller.forward(),
-            onTapUp: (_) {
-              widget.onTap();
-              _controller.reverse();
-            },
             onTapCancel: () => _controller.reverse(),
             child: Container(
               height: _buttonHeight(context),

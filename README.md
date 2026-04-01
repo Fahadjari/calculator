@@ -14,6 +14,7 @@ A **production-ready** Flutter calculator app with a premium dark-mode UI, smoot
 | **Haptic feedback** | Light → digits, Medium → clear/backspace, Heavy → equals |
 | **Architecture** | `/logic` ↔ `/widgets` ↔ `/screens` — fully separated |
 | **State** | `ChangeNotifier` + `Provider` — minimal, no boilerplate |
+| **Offline-first** | 100% local calculation, no API/network dependency |
 | **Tests** | Unit tests for all arithmetic + edge cases |
 
 ---
@@ -103,9 +104,7 @@ UI Action (button tap)
 | Package | Purpose |
 |---------|---------|
 | `provider ^6.1.2` | State management |
-| `google_fonts ^6.2.1` | DM Sans typography |
-| `flutter_animate ^4.5.0` | Animation helpers |
-| `vibration ^1.9.0` | Haptic feedback |
+| `google_fonts ^5.1.0` | DM Sans typography |
 
 ---
 
@@ -128,6 +127,8 @@ Tests cover:
 
 | Dark Mode | Light Mode |
 |-----------|------------|
-| Deep charcoal background | Soft white/grey surface |
-| Purple-tinted operators | Indigo operators |
-| Glowing equals button | Solid indigo equals |
+| ![Dark Mode Calculator UI](screenshots/dark-mode.png) | ![Light Mode Calculator UI](screenshots/light-mode.png) |
+
+> Add your real app screenshots at:
+> - `screenshots/dark-mode.png`
+> - `screenshots/light-mode.png`

@@ -12,12 +12,8 @@ dependencies:
     sdk: flutter
   # State management
   provider: ^6.1.2
-  # Haptic feedback
-  vibration: ^1.9.0
   # Google Fonts for premium typography
-  google_fonts: ^6.2.1
-  # Animations
-  flutter_animate: ^4.5.0
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   flutter_test:

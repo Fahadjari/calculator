@@ -82,15 +82,19 @@ class CalculatorLogic {
   // ─── Digit Input ──────────────────────────────────────────────────────────
 
   static CalculatorState _handleDigit(CalculatorState state, String digit) {
-    // After a result, start fresh
+    if (state.hasError) {
+      return CalculatorState(display: digit, expression: digit);
+    }
+
+    // After showing a result, a digit starts a fresh expression.
     if (state.isResult) {
-      return CalculatorState(
-        display: digit,
-        expression: state.expression.isNotEmpty
-            ? '${state.expression}${_lastOperator(state.expression) != null ? "" : " "}$digit'
-            : digit,
-        isResult: false,
-      );
+      return CalculatorState(display: digit, expression: digit, isResult: false);
+    }
+
+    // If user just tapped an operator, start a new operand.
+    if (_endsWithOperator(state.expression)) {
+      final expr = '${state.expression.trimRight()} $digit';
+      return state.copyWith(display: digit, expression: expr, isResult: false);
     }
 
     // Prevent leading zeros (but allow "0.")
@@ -118,6 +122,13 @@ class CalculatorLogic {
     if (state.isResult) {
       return CalculatorState(display: '0.', expression: '0.');
     }
+    if (state.hasError) {
+      return const CalculatorState(display: '0.', expression: '0.');
+    }
+    if (_endsWithOperator(state.expression)) {
+      final expr = '${state.expression.trimRight()} 0.';
+      return state.copyWith(display: '0.', expression: expr);
+    }
     // Don't add a second decimal point
     if (state.display.contains('.')) return state;
 
@@ -135,6 +146,16 @@ class CalculatorLogic {
   static CalculatorState _handleOperator(
       CalculatorState state, CalculatorAction action) {
     final opSymbol = _actionToOperator(action);
+    if (state.hasError) return state;
+
+    // If current display is a previous result, continue from that value.
+    if (state.isResult) {
+      return CalculatorState(
+        display: state.display,
+        expression: '${state.display} $opSymbol',
+        isResult: false,
+      );
+    }
 
     // If there's already a pending complete expression, evaluate it first
     if (!state.isResult && _canEvaluate(state.expression)) {
@@ -172,7 +193,7 @@ class CalculatorLogic {
   // ─── Equals ───────────────────────────────────────────────────────────────
 
   static CalculatorState _handleEquals(CalculatorState state) {
-    if (state.expression.isEmpty) return state;
+    if (state.expression.isEmpty || state.hasError) return state;
 
     // Build the full expression (append current display if it's not already there)
     String fullExpr = state.expression;
